@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "813103481208",
+    "project_id": "job-thrust"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:813103481208:android:4df623783669c275",
+        "android_client_info": {
+          "package_name": "com.manager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "813103481208-uo8madlrcib2iphu3o3h7ruaj5e2k0a5.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "813103481208-8oqg00r0plqqk4l775h5vb3u6qhf5mi9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.manager",
+            "certificate_hash": "0c49a41e4284ab20a74f7cbf5b814950f7bcec33"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpApyU9CQRz8Dt08ggAwqeDs0PnDnLuP8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
