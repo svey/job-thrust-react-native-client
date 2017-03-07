@@ -1,7 +1,7 @@
 export const EMAIL_CHANGED = 'email_changed';
 export const PASSWORD_CHANGED = 'password_changed';
-export const LOGIN_USER_SUCCESS = 'login_user_success';
-export const LOGIN_USER_FAIL = 'login_user_fail';
-export const LOGIN_USER = 'login_user';
+export const GOOGLE_AUTH_SUCCESS = 'google_auth_success';
+export const GOOGLE_AUTH_FAIL = 'google_auth_fail';
+export const GOOGLE_AUTH = 'google_auth';
 
 export const APPLICATION_UPDATE = 'application_update';

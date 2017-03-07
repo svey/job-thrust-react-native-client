@@ -6,33 +6,33 @@ import ApplicationCreate from './components/ApplicationCreate';
 
 const RouterComponent = () => {
   return (
-      <Router sceneStyle={{ paddingTop: 65 }}>
-        <Scene key="auth">
+      <Router sceneStyle={{ paddingTop: 60 }}>
           <Scene
-            key="login"
+            key="signIn"
+            title="Job Thrust"
+            titleStyle={{ color: '#FFF' }}
             component={LoginForm}
-            title="Please Login"
-          />
-        </Scene>
-
-        <Scene key="main">
-          <Scene
-            onRight={() => Actions.applicationCreate()}
-            rightTitle="Add"
-            key="applications"
-            component={ApplicationList}
-            title="Applications"
+            navigationBarStyle={{ backgroundColor: '#1e2226' }}
             initial
           />
 
           <Scene
-            // onLeft={() => Actions.applications()}
-            // leftTitle="Back"
-            key="applicationCreate"
-            component={ApplicationCreate}
-            title="Create Application"
+            key="applications"
+            title="Manage"
+            titleStyle={{ color: '#FFF' }}
+            component={ApplicationList}
+            navigationBarStyle={{ backgroundColor: '#1e2226' }}
+            rightTitle="Search"
+            onRight={() => Actions.applicationCreate()}
           />
-        </Scene>
+
+          <Scene
+            key="applicationCreate"
+            title="Add Application"
+            titleStyle={{ color: '#FFF' }}
+            component={ApplicationCreate}
+            navigationBarStyle={{ backgroundColor: '#1e2226' }}
+          />
       </Router>
   );
 };

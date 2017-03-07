@@ -1,22 +1,45 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { Text } from 'react-native';
+import { Actions } from 'react-native-router-flux';
+
+import { CardSection, Card, Button } from './common';
+
 
 class ApplicationList extends Component {
   render() {
     return (
-      <View>
-        <Text>ApplicationList</Text>
-        <Text>ApplicationList</Text>
-        <Text>ApplicationList</Text>
-        <Text>ApplicationList</Text>
-        <Text>ApplicationList</Text>
-        <Text>ApplicationList</Text>
-        <Text>ApplicationList</Text>
-        <Text>ApplicationList</Text>
-        <Text>ApplicationList</Text>
-      </View>
+      <Card>
+        <CardSection>
+          <Text>ApplicationList</Text>
+        </CardSection>
+        <CardSection>
+          <Text>ApplicationList</Text>
+        </CardSection>
+        <CardSection>
+          <Text>ApplicationList</Text>
+        </CardSection>
+        <CardSection>
+          <Text>ApplicationList</Text>
+        </CardSection>
+        <CardSection>
+          <Text>ApplicationList</Text>
+        </CardSection>
+        <CardSection>
+          <Button onPress={Actions.applicationCreate}>
+            Add Application
+          </Button>
+        </CardSection>
+
+      </Card>
     );
   }
 }
+
+const styles = {
+  container: {
+    flexDirection: 'column',
+    alignItems: 'center' 
+  }
+};
 
 export default ApplicationList;

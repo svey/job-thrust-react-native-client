@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import AuthReducer from "./AuthReducer";
 import ApplicationFormReducer from './ApplicationFormReducer';
+import GoogleAuthReducer from './GoogleAuthReducer';
 
 export default combineReducers({
-  auth: AuthReducer,
+  signin: GoogleAuthReducer,
   applicationForm: ApplicationFormReducer
 });
