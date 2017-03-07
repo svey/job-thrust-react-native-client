@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "813103481208",
-    "project_id": "job-thrust"
+    "project_number": "689104807773",
+    "project_id": "project--4321836730499106586"
   },
-  "client": [
+  "client": [ 
     {
       "client_info": {
-        "mobilesdk_app_id": "1:813103481208:android:4df623783669c275",
+        "mobilesdk_app_id": "1:689104807773:android:e0e01c746c7775b5",
         "android_client_info": {
           "package_name": "com.manager"
         }
       },
       "oauth_client": [
         {
-          "client_id": "813103481208-uo8madlrcib2iphu3o3h7ruaj5e2k0a5.apps.googleusercontent.com",
-          "client_type": 3
-        },
-        {
-          "client_id": "813103481208-8oqg00r0plqqk4l775h5vb3u6qhf5mi9.apps.googleusercontent.com",
+          "client_id": "689104807773-ftjahdmp7a4kk89lkg7i86si50mgp0iu.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.manager",
             "certificate_hash": "0c49a41e4284ab20a74f7cbf5b814950f7bcec33"
           }
+        },
+        {
+          "client_id": "689104807773-p626rgub1dnf6srurpg3heslnugk59m1.apps.googleusercontent.com",
+          "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDpApyU9CQRz8Dt08ggAwqeDs0PnDnLuP8"
+          "current_key": "AIzaSyCZpyaqBMZZI-VQhEAizmAveyaTB_LHplA"
         }
       ],
       "services": {

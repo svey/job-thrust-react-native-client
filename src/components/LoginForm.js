@@ -1,84 +1,169 @@
 import React, { Component } from 'react';
-import { Text } from 'react-native';
-import { connect } from 'react-redux';
-import { Card, CardSection, Input, Button, Spinner } from './common';
-import { emailChanged, passwordChanged, loginUser } from '../actions';
+import { Actions } from 'react-native-router-flux';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+} from 'react-native';
+
+import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin';
 
 class LoginForm extends Component {
-  onEmailChange(text) {
-    this.props.emailChanged(text);
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: null
+    };
   }
 
-  onPasswordChange(text) {
-    this.props.passwordChanged(text);
-  }
-
-  onButtonPress() {
-    const { email, password } = this.props;
-    this.props.loginUser({ email, password });
-  }
-
-  renderButton() {
-    if (this.props.loading) {
-      return <Spinner size="large" />;
-    }
-    return (
-      <Button onPress={this.onButtonPress.bind(this)}>
-        Login
-      </Button>
-    );
+  componentDidMount() {
+    this._setupGoogleSignin();
   }
 
   render() {
+    if (!this.state.user) {
+      return (
+        <View style={styles.container}>
+          <GoogleSigninButton
+            style={{ width: 120, height: 44 }}
+            color={GoogleSigninButton.Color.Light}
+            size={GoogleSigninButton.Size.Icon}
+            onPress={() => { this._signIn(); }}/>
+        </View>
+      );
+    }
+
+    if (this.state.user) {
+      return (
+        <View style={styles.container}>
+          <Text
+            style={{
+            fontSize: 18,
+            fontWeight: 'bold',
+            marginBottom: 20
+            }}
+          >
+            Welcome {this.state.user.name}
+          </Text>
+          <Text>
+            Your email is: {this.state.user.email}
+          </Text>
+
+          <TouchableOpacity onPress={() => {this._signOut(); }}>
+            <View style={{ marginTop: 50 }}>
+              <Text>Log out</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      );
+    }
+  }
+
+  async _setupGoogleSignin() {
+    try {
+      await GoogleSignin.hasPlayServices({ autoResolve: true });
+      await GoogleSignin.configure({
+        scopes: ['https://www.googleapis.com/auth/calendar'],
+        webClientId: '689104807773-p626rgub1dnf6srurpg3heslnugk59m1.apps.googleusercontent.com',
+        offlineAccess: true
+      });
+
+      const user = await GoogleSignin.currentUserAsync();
+      console.log(user);
+      this.setState({ user });
+    }
+    catch(err) {
+      console.log('Play services error', err.code, err.message);
+    }
+  }
+
+  _signIn() {
+    GoogleSignin.signIn()
+    .then((user) => {
+      console.log(user);
+      this.setState({ user });
+      Actions.main();
+    })
+    .catch((err) => {
+      console.log('WRONG SIGNIN', err);
+    })
+    .done();
+  }
+
+  _signOut() {
+    GoogleSignin.revokeAccess().then(() => GoogleSignin.signOut()).then(() => {
+      this.setState({ user: null });
+    })
+    .done();
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  },
+});
+
+export default LoginForm;
+
+/*import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { GoogleSigninButton, GoogleSignin } from 'react-native-google-signin';
+import { Text } from 'react-native';
+
+
+import { googleAuth } from '../actions';
+import { CardSection } from './common';
+
+
+class GoogleLoginForm extends Component {
+  componentDidMount() {
+    this.setupGoogleSignin();
+  }
+
+  setupGoogleSignin() {
+    GoogleSignin.hasPlayServices({ autoResolve: true });
+    GoogleSignin.configure({
+        scopes: ['https://www.googleapis.com/auth/calendar'],
+        webClientId: '867788377702-gmfcntqtkrmdh3bh1dat6dac9nfiiku1.apps.googleusercontent.com',
+        offlineAccess: true
+      });
+  }
+
+  signIn() {
+    this.props.googleAuth();
+  }
+  
+  render() {
     return (
-      <Card>
-        <CardSection>
-          <Input
-            label="Email"
-            placeholder="email@gmail.com"
-            onChangeText={this.onEmailChange.bind(this)}
-            value={this.props.email}
-          />
-        </CardSection>
-
-        <CardSection>
-          <Input
-            secureTextEntry
-            label="Password"
-            placeholder="password"
-            onChangeText={this.onPasswordChange.bind(this)}
-            value={this.props.password}
-          />
-        </CardSection>
-
-        <Text style={styles.errorTextStyle}>
-          {this.props.error}
+      <CardSection style={{ flexDirection: 'column', alignItems: 'center' }}>
+        <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 20 }}>
+          JobThrust
         </Text>
 
-        <CardSection>
-          {this.renderButton()}
-        </CardSection>
-      </Card>
+        <GoogleSigninButton
+          style={{ width: 120, height: 44 }}
+          color={GoogleSigninButton.Color.Dark}
+          size={GoogleSigninButton.Size.Icon}
+          onPress={() => { this.signIn(); }}
+        />
+      </CardSection>
     );
   }
 }
 
-const styles = {
-  errorTextStyle: {
-    fontSize: 20,
-    alignSelf: 'center',
-    color: 'red'
-  }
-};
-
-const mapStateToProps = ({ auth }) => {
-  const { email, password, error, loading } = auth;
+const mapStateToProps = ({ signin }) => {
+  const { email, user, loading, error } = signin;
   return {
     email, // { email: email } shortcut in ES6
-    password,
-    error,
-    loading
+    user,
+    loading,
+    error
   };
 };
 
-export default connect(mapStateToProps, { emailChanged, passwordChanged, loginUser })(LoginForm);
+export default connect(mapStateToProps, { googleAuth })(GoogleLoginForm);*/
