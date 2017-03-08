@@ -40,7 +40,6 @@ class App extends Component {
       });
 
       const user = await GoogleSignin.currentUserAsync();
-      document.cookie = `jobTrustNative=true; passport: { user: ${user.id} }`;
       Actions.applications({ user });
     }
     catch (err) {
