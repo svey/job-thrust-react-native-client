@@ -1,19 +1,24 @@
 import {
-  APPLICATION_UPDATE
+  APPLICATION_UPDATE,
+  APPLICATION_SEARCH
 } from '../actions/types';
 
 const INITIAL_STATE = {
   company: '', //name
   title: '',
-  stage: ''
-
+  stage: '',
+  search: '',
+  location: '',
+  results: null
 };
 
 export default (state = INITIAL_STATE, action) => {
+  console.log(action.payload);
   switch (action.type) {
     case APPLICATION_UPDATE:
-      // action.payload === { prop: 'company', value: 'JobThrust' }
       return { ...state, [action.payload.prop]: action.payload.value };
+    case APPLICATION_SEARCH:
+      return { ...state, results: action.payload };
     default:
       return state;
   }

@@ -7,7 +7,6 @@ import { Actions } from 'react-native-router-flux';
 
 import reducers from './reducers';
 import Router from './Router';
-import { googleAuth } from './actions';
 
 class App extends Component {
   constructor(props) {
@@ -41,7 +40,7 @@ class App extends Component {
       });
 
       const user = await GoogleSignin.currentUserAsync();
-      console.log(user);
+      document.cookie = `jobTrustNative=true; passport: { user: ${user.id} }`;
       Actions.applications({ user });
     }
     catch (err) {

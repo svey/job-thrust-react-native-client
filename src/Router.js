@@ -3,6 +3,7 @@ import { Scene, Router, Actions } from 'react-native-router-flux';
 import LoginForm from './components/LoginForm';
 import ApplicationList from './components/ApplicationList';
 import ApplicationCreate from './components/ApplicationCreate';
+import Search from './components/Search';
 
 const RouterComponent = () => {
   return (
@@ -18,12 +19,12 @@ const RouterComponent = () => {
 
           <Scene
             key="applications"
-            title="Manage"
+            title="Manage Applications"
             titleStyle={{ color: '#FFF' }}
             component={ApplicationList}
             navigationBarStyle={{ backgroundColor: '#1e2226' }}
             rightTitle="Search"
-            onRight={() => Actions.applicationCreate()}
+            onRight={() => Actions.search()}
           />
 
           <Scene
@@ -31,6 +32,14 @@ const RouterComponent = () => {
             title="Add Application"
             titleStyle={{ color: '#FFF' }}
             component={ApplicationCreate}
+            navigationBarStyle={{ backgroundColor: '#1e2226' }}
+          />
+
+          <Scene
+            key="search"
+            title="Search Jobs"
+            titleStyle={{ color: '#FFF' }}
+            component={Search}
             navigationBarStyle={{ backgroundColor: '#1e2226' }}
           />
       </Router>

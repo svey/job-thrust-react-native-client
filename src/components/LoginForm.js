@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Actions } from 'react-native-router-flux';
 import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin';
 //import components
-import { CardSection } from './common';
+import { Card, CardSection, Button } from './common';
 
 
 class LoginForm extends Component {
@@ -16,7 +16,7 @@ class LoginForm extends Component {
   signIn() {
     GoogleSignin.signIn()
     .then((user) => {
-      console.log(user);
+      this.setState({ user });
       Actions.applications({ user });
     })
     .catch((err) => {
@@ -25,16 +25,40 @@ class LoginForm extends Component {
     .done();
   }
 
-  render() {
+  signOut() {
+    GoogleSignin.revokeAccess().then(() => GoogleSignin.signOut()).then(() => {
+      this.setState({ user: null });
+    })
+    .done();
+  }
+
+  renderButton() {
+    if (this.state.user || this.props.user) {
+      return (
+        <CardSection>
+          <Button onPress={this.signOut.bind(this)}>
+            Logout
+          </Button>
+        </CardSection>
+      );
+    }
     return (
       <CardSection style={styles.container}>
         <GoogleSigninButton
           style={{ width: 230, height: 48 }}
           color={GoogleSigninButton.Color.Dark}
-          size={GoogleSigninButton.Size.Standard}
+          size={GoogleSigninButton.Size.Icon}
           onPress={() => { this.signIn(); }}
         />
       </CardSection>
+    );
+  }
+
+  render() {
+    return (
+      <Card>
+        {this.renderButton()}
+      </Card>
     );
   }
 }

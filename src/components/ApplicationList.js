@@ -35,11 +35,4 @@ class ApplicationList extends Component {
   }
 }
 
-const styles = {
-  container: {
-    flexDirection: 'column',
-    alignItems: 'center' 
-  }
-};
-
 export default ApplicationList;
