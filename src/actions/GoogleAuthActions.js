@@ -4,16 +4,21 @@ import { GoogleSignin } from 'react-native-google-signin';
 import {
   GOOGLE_AUTH_SUCCESS,
   GOOGLE_AUTH_FAIL,
-  GOOGLE_AUTH
 } from './types';
 
-export const googleAuth = () => {
+export const googleAuthSignin = () => {
   return (dispatch) => {
-    dispatch({ type: GOOGLE_AUTH });
-
     GoogleSignin.signIn()
-      .then(user => googleAuthSuccess(dispatch, user))
+      .then(user => googleActionSuccess(dispatch, user))
       .catch(() => googleAuthFail(dispatch));
+  };
+};
+
+export const googleAuthSignout = () => {
+  return (dispatch) => {
+    GoogleSignin.revokeAccess()
+      .then(() => GoogleSignin.signOut())
+        .then(() => googleActionSuccess(dispatch, null));
   };
 };
 
@@ -23,11 +28,11 @@ const googleAuthFail = (dispatch) => {
   });
 };
 
-const googleAuthSuccess = (dispatch, user) => {
+const googleActionSuccess = (dispatch, user) => {
   dispatch({
     type: GOOGLE_AUTH_SUCCESS,
     payload: user
   });
-
-  Actions.applications();
+  
+  user ? Actions.applications() : null;
 };

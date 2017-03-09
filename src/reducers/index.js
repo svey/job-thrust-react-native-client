@@ -7,7 +7,7 @@ import SearchReducer from './SearchReducer';
 
 
 export default combineReducers({
-  signin: GoogleAuthReducer,
+  authenticationInformation: GoogleAuthReducer,
   applicationForm: ApplicationFormReducer,
   searchForm: SearchReducer
 });

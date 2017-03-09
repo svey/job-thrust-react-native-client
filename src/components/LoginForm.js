@@ -1,39 +1,24 @@
 import React, { Component } from 'react';
-import { Actions } from 'react-native-router-flux';
-import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin';
-//import components
+import { connect } from 'react-redux';
+import { GoogleSigninButton } from 'react-native-google-signin';
+
+//import components && actions
 import { Card, CardSection, Button } from './common';
+import { googleAuthSignin, googleAuthSignout } from '../actions';
 
 
 class LoginForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      user: null
-    };
-  }
-  //google auth signin request
+  //google auth signin request => see GoogleAuthActions
   signIn() {
-    GoogleSignin.signIn()
-    .then((user) => {
-      this.setState({ user });
-      Actions.applications({ user });
-    })
-    .catch((err) => {
-      console.log('Google Authentication Failed: ', err);
-    })
-    .done();
+    this.props.googleAuthSignin();
   }
 
   signOut() {
-    GoogleSignin.revokeAccess().then(() => GoogleSignin.signOut()).then(() => {
-      this.setState({ user: null });
-    })
-    .done();
+    this.props.googleAuthSignout();
   }
 
   renderButton() {
-    if (this.state.user || this.props.user) {
+    if (this.props.user) {
       return (
         <CardSection>
           <Button onPress={this.signOut.bind(this)}>
@@ -70,4 +55,9 @@ const styles = {
   }
 };
 
-export default LoginForm;
+const mapStateToProps = (state) => {
+  const { user } = state.authenticationInformation;
+  return { user };
+};
+
+export default connect(mapStateToProps, { googleAuthSignin, googleAuthSignout })(LoginForm);
