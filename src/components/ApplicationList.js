@@ -12,7 +12,7 @@ class ApplicationList extends Component {
     return (
       <Card>
         <CardSection>
-          <Text>{this.props.email}</Text>
+          <Text>{this.props.user.email}</Text>
         </CardSection>
         <CardSection>
           <Text>ApplicationList</Text>
@@ -37,13 +37,10 @@ class ApplicationList extends Component {
   }
 }
 
-// const mapStateToProps = (state) => {
-//   console.log(state)
-//   const { user } = state.user;
+const mapStateToProps = (state) => {
+  const { user } = state.authenticationInformation;
 
-//   return { user };
-// };
+  return { user };
+};
 
-// export default connect(mapStateToProps)(ApplicationList);
-
-export default  ApplicationList;
+export default connect(mapStateToProps)(ApplicationList);

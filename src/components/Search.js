@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { ScrollView } from 'react-native';
 import { connect } from 'react-redux';
+
 import { Card, CardSection, Input, Button } from './common';
 import { searchUpdate, searchQuery } from '../actions';
 import SearchResult from './SearchResult';
 
 
 class Search extends Component {
-
   renderSearchResults() {
     console.log('props: ', this.props);
     if (this.props.results) {
@@ -65,7 +65,6 @@ class Search extends Component {
 
 const mapStateToProps = (state) => {
   const { query, location, results } = state.searchForm;
-
   return { query, location, results };
 };
 

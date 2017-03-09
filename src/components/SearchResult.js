@@ -4,10 +4,7 @@ import { Card, CardSection, Button } from './common';
 
 const SearchResult = ({ result }) => {
   const { city, company, jobtitle, url, snippet } = result;
-  const {
-    headerContentStyle,
-    headerTextStyle,
-  } = styles;
+  const { headerContentStyle, headerTextStyle } = styles;
 
   return (
     <Card>

@@ -1,26 +1,28 @@
 import React, { Component } from 'react';
 import { createStore, applyMiddleware } from 'redux';
+import { GoogleSignin } from 'react-native-google-signin';
 import { Provider } from 'react-redux';
 import ReduxThunk from 'redux-thunk';
-import { GoogleSignin } from 'react-native-google-signin';
-import { Actions } from 'react-native-router-flux';
 
 import reducers from './reducers';
 import Router from './Router';
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      user: null
-    };
-  }
 
+class App extends Component {
   componentDidMount() {
     this.setupGoogleSignin();
   }
 
-  render () {
+  setupGoogleSignin() {
+    GoogleSignin.hasPlayServices({ autoResolve: true });
+    GoogleSignin.configure({
+      scopes: ['https://www.googleapis.com/auth/calendar', 'https://mail.google.com/'],
+      webClientId: '689104807773-p626rgub1dnf6srurpg3heslnugk59m1.apps.googleusercontent.com',
+      offlineAccess: true
+    });
+  }
+
+  render() {
     const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
 
     return (
@@ -28,23 +30,6 @@ class App extends Component {
         <Router />         
       </Provider>
     );
-  }
-
-  async setupGoogleSignin() {
-    try {
-      await GoogleSignin.hasPlayServices({ autoResolve: true });
-      await GoogleSignin.configure({
-        scopes: ['https://www.googleapis.com/auth/calendar'],
-        webClientId: '689104807773-p626rgub1dnf6srurpg3heslnugk59m1.apps.googleusercontent.com',
-        offlineAccess: true
-      });
-
-      const user = await GoogleSignin.currentUserAsync();
-      Actions.applications({ user });
-    }
-    catch (err) {
-      console.log('Play services error', err.code, err.message);
-    }
   }
 }
 
