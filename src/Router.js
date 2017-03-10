@@ -1,5 +1,5 @@
 import React from 'react';
-import { Scene, Router, Actions } from 'react-native-router-flux';
+import { Scene, Router, Actions, ActionConst } from 'react-native-router-flux';
 import LoginForm from './components/LoginForm';
 import ApplicationList from './components/ApplicationList';
 import ApplicationCreate from './components/ApplicationCreate';
@@ -33,6 +33,7 @@ const RouterComponent = () => {
             titleStyle={{ color: '#FFF' }}
             component={ApplicationCreate}
             navigationBarStyle={{ backgroundColor: '#1e2226' }}
+            onLeft
           />
 
           <Scene

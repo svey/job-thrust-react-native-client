@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {
   APPLICATION_UPDATE,
-  //APPLICATION_ADD
+  APPLICATION_GET
 } from './types';
 // INPUT is an OBJECT: { prop: , value: }
 export const applicationUpdate = ({ prop, value }) => {
@@ -15,7 +15,7 @@ export const applicationGetAll = (id) => {
   const url = 'http://custom-env.a2uvfbnd4f.us-west-2.elasticbeanstalk.com/api/application';
   return (dispatch) => {
     instance(url, id).get('')
-      .then((response) => console.log(response));    
+      .then((response) => applicationGetAllSuccess(dispatch, response));    
   };
 };
 
@@ -24,10 +24,10 @@ const instance = (url, id) => axios.create({
   headers: { 'Job-Thrust-Native': id } //move to SearchResult make job-thrust-native value === googleID
 });
 
-const applicationAddSuccess = (dispatch, response) => {
+const applicationGetAllSuccess = (dispatch, response) => {
   dispatch({
-    type: APPLICATION_ADD,
-    payload: response.data.results
+    type: APPLICATION_GET,
+    payload: response.data
   });
 };
 

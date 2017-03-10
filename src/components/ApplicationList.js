@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import { ScrollView } from 'react-native';
 import { connect } from 'react-redux';
-import { Text } from 'react-native';
-import { Actions } from 'react-native-router-flux';
-import { applicationGetAll } from '../actions';
 
-import { CardSection, Card, Button } from './common';
+
+import { applicationGetAll } from '../actions';
+import { Button, CardSection, Card } from './common';
+import Application from './Application';
 
 
 class ApplicationList extends Component {
@@ -12,31 +13,33 @@ class ApplicationList extends Component {
     this.props.applicationGetAll(this.props.id);
   }
 
+  renderApplications() {
+    console.log('props: ', this.props);
+    
+    if (this.props.applications) {
+      return this.props.applications.reverse().map(application =>
+        
+        <Application key={application.id} application={application} />
+      );
+    }
+  }
+
   render() {
     console.log(this.props);
     return (
       <Card>
         <CardSection>
-          <Text>{this.props.email}</Text>
-        </CardSection>
-        <CardSection>
-          <Text>ApplicationList</Text>
-        </CardSection>
-        <CardSection>
-          <Text>ApplicationList</Text>
-        </CardSection>
-        <CardSection>
-          <Text>ApplicationList</Text>
-        </CardSection>
-        <CardSection>
-          <Text>ApplicationList</Text>
-        </CardSection>
-        <CardSection>
-          <Button onPress={Actions.applicationCreate}>
-            Add Application
+          <Button onPress={() => this.props.applicationGetAll(this.props.id)}>
+            Refresh
+          </Button>
+          <Button onPress={() => this.props.applicationGetAll(this.props.id)}>
+            Add App // Redirect to Actions.CreateApp()?
           </Button>
         </CardSection>
-
+      
+        <ScrollView>
+          {this.renderApplications()}
+        </ScrollView>
       </Card>
     );
   }
@@ -44,8 +47,9 @@ class ApplicationList extends Component {
 
 const mapStateToProps = (state) => {
   const { email, id } = state.authenticationInformation.user;
+  const { applications } = state.applicationForm;
 
-  return { email, id };
+  return { email, id, applications };
 };
 
 export default connect(mapStateToProps, { applicationGetAll })(ApplicationList);

@@ -1,5 +1,6 @@
 import {
   APPLICATION_UPDATE,
+  APPLICATION_GET
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -14,6 +15,8 @@ export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case APPLICATION_UPDATE:
       return { ...state, [action.payload.prop]: action.payload.value };
+    case APPLICATION_GET:
+      return { ...state, ...INITIAL_STATE, applications: action.payload };
     default:
       return state;
   }

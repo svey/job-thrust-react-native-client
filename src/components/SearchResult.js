@@ -3,25 +3,27 @@ import { Text, View, Linking } from 'react-native';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
+
 import { Card, CardSection, Button } from './common';
 
+
 class SearchResult extends Component {
+  applicationAdd(title, description, company) {
+    const id = this.props.id;
+    const url = 'http://custom-env.a2uvfbnd4f.us-west-2.elasticbeanstalk.com/api/job/';
+    
+    this.instance(url, id).post('', { title, description, company })
+      .then(response => console.log('job added: ', response));    
+  }
 
-applicationAdd(title, description, company) {
-  const id = this.props.id;
-  const url = 'http://custom-env.a2uvfbnd4f.us-west-2.elasticbeanstalk.com/api/job/';
-  this.instance(url, id).post('', { title, description, company })
-    .then(response => console.log('job added: ', response));    
-}
-
-instance(url, id) {
-  return (
-    axios.create({
-      baseURL: url,
-      headers: { 'Job-Thrust-Native': id }
-    })
-  );
-}
+  instance(url, id) {
+    return (
+      axios.create({
+        baseURL: url,
+        headers: { 'Job-Thrust-Native': id }
+      })
+    );
+  }
 
   render() {
     const { city, company, jobtitle, url, snippet } = this.props.result;
