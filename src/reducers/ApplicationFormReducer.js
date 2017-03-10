@@ -5,7 +5,8 @@ import {
 const INITIAL_STATE = {
   company: '', //name
   title: '',
-  stage: ''
+  stage: '',
+  applications: ''
 };
 
 export default (state = INITIAL_STATE, action) => {

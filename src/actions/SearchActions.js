@@ -13,7 +13,7 @@ export const searchUpdate = ({ prop, value }) => {
 
 export const searchQuery = ({ query, location }) => {
   return (dispatch) => {
-    instance('', {
+    instance('http://api.indeed.com/ads/apisearch?callback=?').get('', {
       params: {
         publisher: '5024495540845813', // TODO: HIDE THIS!!!
         l: location,
@@ -28,10 +28,11 @@ export const searchQuery = ({ query, location }) => {
   };
 };
 
-const instance = axios.create({
-  baseURL: 'http://api.indeed.com/ads/apisearch?callback=?',
+const instance = (url) => axios.create({
+  baseURL: url,
   headers: { 'Job-Thrust-Native': 'Launch' }
 });
+
 
 const searchQuerySuccess = (dispatch, response) => {
   dispatch({

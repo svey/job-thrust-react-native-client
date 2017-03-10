@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { View, Image } from 'react-native';
 
 import { googleAuthSignin, googleAuthSignout } from '../actions';
-import { Card, CardSection, Button } from './common';
+import { CardSection, Button } from './common';
 import favicon from '../favicon.png';
 
 

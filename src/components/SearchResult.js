@@ -1,38 +1,60 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Text, View, Linking } from 'react-native';
+import { connect } from 'react-redux';
+import axios from 'axios';
+
 import { Card, CardSection, Button } from './common';
 
-const SearchResult = ({ result }) => {
-  const { city, company, jobtitle, url, snippet } = result;
-  const { headerContentStyle, headerTextStyle } = styles;
+class SearchResult extends Component {
 
+applicationAdd(title, description, company) {
+  const id = this.props.id;
+  const url = 'http://custom-env.a2uvfbnd4f.us-west-2.elasticbeanstalk.com/api/job/';
+  this.instance(url, id).post('', { title, description, company })
+    .then(response => console.log('job added: ', response));    
+}
+
+instance(url, id) {
   return (
-    <Card>
-      <CardSection>
-        <View style={headerContentStyle}>
-          <Text style={headerTextStyle}>{jobtitle}</Text>
-          <Text>{city}</Text>
-          <Text>{company}</Text>
-          <Text>{snippet.replace(/\//g,'').replace(/<b>/g, '')}</Text>
-        </View>
-      </CardSection>
-
-      <CardSection>
-        <Button onPress={() => Linking.openURL(url)}>
-          View
-        </Button>
-
-        <Button onPress={() => Linking.openURL(url)}>
-          Add
-        </Button>
-
-        <Button onPress={() => Linking.openURL(url)}>
-          Remove
-        </Button>
-      </CardSection>
-    </Card>
+    axios.create({
+      baseURL: url,
+      headers: { 'Job-Thrust-Native': id }
+    })
   );
-};
+}
+
+  render() {
+    const { city, company, jobtitle, url, snippet } = this.props.result;
+    const { headerContentStyle, headerTextStyle } = styles;
+
+    return (
+      <Card>
+        <CardSection>
+          <View style={headerContentStyle}>
+            <Text style={headerTextStyle}>{jobtitle}</Text>
+            <Text>{city}</Text>
+            <Text>{company}</Text>
+            <Text>{snippet.replace(/\//g,'').replace(/<b>/g, '')}</Text>
+          </View>
+        </CardSection>
+
+        <CardSection>
+          <Button onPress={() => Linking.openURL(url)}>
+            View
+          </Button>
+
+          <Button onPress={this.applicationAdd.bind(this, jobtitle, snippet, company)}>
+            Add
+          </Button>
+
+          <Button onPress={() => Linking.openURL(url)}>
+            Remove
+          </Button>
+        </CardSection>
+      </Card>
+    );  
+  }
+}
 
 const styles = {
   headerContentStyle: {
@@ -59,4 +81,9 @@ const styles = {
   }
 };
 
-export default SearchResult;
+const mapStateToProps = (state) => {
+  const { email, id } = state.authenticationInformation.user;
+  return { email, id };
+};
+
+export default connect(mapStateToProps)(SearchResult);

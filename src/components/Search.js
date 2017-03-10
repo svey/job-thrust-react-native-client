@@ -10,8 +10,10 @@ import SearchResult from './SearchResult';
 class Search extends Component {
   renderSearchResults() {
     console.log('props: ', this.props);
+    
     if (this.props.results) {
       return this.props.results.map(result =>
+        
         <SearchResult key={result.jobkey} result={result} />
       );
     }

@@ -15,7 +15,7 @@ export default (state = INITIAL_STATE, action) => {
     case SEARCH_UPDATE:
       return { ...state, [action.payload.prop]: action.payload.value };
     case SEARCH_QUERY:
-      return { ...state, results: action.payload };
+      return { ...state, ...INITIAL_STATE, results: action.payload };
     default:
       return state;
   }
