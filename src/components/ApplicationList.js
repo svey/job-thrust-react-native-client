@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { ScrollView } from 'react-native';
 import { connect } from 'react-redux';
+import { Actions } from 'react-native-router-flux';
 
 
 import { applicationGetAll } from '../actions';
@@ -9,7 +10,7 @@ import Application from './Application';
 
 
 class ApplicationList extends Component {
-  componentWillMount() {
+  componentDidMount() {
     this.props.applicationGetAll(this.props.id);
   }
 
@@ -32,8 +33,8 @@ class ApplicationList extends Component {
           <Button onPress={() => this.props.applicationGetAll(this.props.id)}>
             Refresh
           </Button>
-          <Button onPress={() => this.props.applicationGetAll(this.props.id)}>
-            Add App // Redirect to Actions.CreateApp()?
+          <Button onPress={() => Actions.applicationCreate()}>
+            Add App
           </Button>
         </CardSection>
       

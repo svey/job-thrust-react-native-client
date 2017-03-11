@@ -1,10 +1,31 @@
 import React, { Component } from 'react';
 import { Picker, Text } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
+import axios from 'axios';
+
+
 import { Card, CardSection, Input, Button } from './common';
-import { applicationUpdate } from '../actions';
+import { applicationUpdate, applicationAdd } from '../actions';
+
 
 class ApplicationCreate extends Component {
+  applicationAdd(title, description, company) {
+    const id = this.props.id;
+    const url = 'http://custom-env.a2uvfbnd4f.us-west-2.elasticbeanstalk.com/api/job/';
+    
+    this.instance(url, id).post('', { title, description, company })
+      .then(() => Actions.applications({ type: 'reset' }));
+  }
+
+  instance(url, id) {
+    return (
+      axios.create({
+        baseURL: url,
+        headers: { 'Job-Thrust-Native': id }
+      })
+    );
+  }
   
 
   render() {
@@ -15,7 +36,10 @@ class ApplicationCreate extends Component {
             label="Company"
             placeholder="JobThrust"
             value={this.props.company}
-            onChangeText={company => this.props.applicationUpdate({ prop: 'company', value: company })}
+            onChangeText={company => this.props.applicationUpdate({
+              prop: 'company',
+              value: company
+            })}
           />
         </CardSection>
 
@@ -45,8 +69,16 @@ class ApplicationCreate extends Component {
         </CardSection>
 
         <CardSection>
-          <Button>
-            Add
+          <Button
+            onPress={this.applicationAdd.bind(
+              this,
+              this.props.title,
+              this.props.snippet,
+              this.props.company,
+              // this.props.stageId
+            )}
+          >
+            Add App
           </Button>
         </CardSection>
       </Card>
@@ -64,8 +96,9 @@ const styles = {
 
 const mapStateToProps = (state) => {
   const { company, title, stage } = state.applicationForm;
+  const { id } = state.authenticationInformation.user;
 
-  return { company, title, stage };
+  return { company, title, stage, id };
 };
 
-export default connect(mapStateToProps, { applicationUpdate })(ApplicationCreate);
+export default connect(mapStateToProps, { applicationUpdate, applicationAdd })(ApplicationCreate);
